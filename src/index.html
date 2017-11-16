@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Zedua School discovery platform</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content=" Zedua is a School discovery platform that provides information of around 1.6 million schools across India. " />
+  <meta name="robots" content="index, nofollow" />
+  <meta property="og:title" content="Zedua School discovery platform" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://www.zedua.com/" />
+  <meta property="og:image" content="http://zedua.com/home/assets/images/zedua.jpg" />
+  <meta property="og:description" content="Zedua is a school discovery platform that provides, in depth information of around 1.6 million schools in India." />
+  <meta name="google-site-verification" content="UUrdPFORcHZuFKI8e7rVTMCkuw_9eWnI7owN8yIibmk">
+  <meta property="fb:app_id" content="509633299426386"/>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nova+Mono|Waiting+for+the+Sunrise" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/fonts/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-float-label.css">
+  <link rel="stylesheet" href="assets/css/lightgallery.css">
+  <link href="assets/css/ng2-toastr.min.css" rel="stylesheet" />
+  <link href="assets/css/lg-fb-comment-box.css" rel="stylesheet" />
+  <link href="assets/css/lg-transitions.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/busy.css">
+</head>
+
+<body>
+
+<app-root></app-root>
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+</script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+</script>
+<script type="text/javascript" src="assets/js/script.js"></script>
+<script src="//js.pusher.com/3.2/pusher.min.js"></script>
+<script  type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhT4qKThHWUVXd7GT_6u4PvckHtGhSLQU&libraries=places"></script>
+<script>
+    $(document).ready(function () {
+
+        let searchParams = new URLSearchParams(window.location.search)
+        let token = searchParams.get('token');
+        let type = searchParams.get('type');
+
+        if(token!=null && type==null)
+        {
+            $("#loginModal").modal('show');
+
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++)
+            {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++)
+            {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById('ResetPasswordWithEmail').style.display = "block";
+        }
+
+        let redirect = searchParams.get('redirect');
+
+        if(redirect != null)
+        {
+            $("#loginModal").modal('show');
+            document.getElementById("open").click();
+        }
+
+    });
+  </script>
+<script>
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+@font-face {
+  font-family: 'icomoon';
+ 
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-about-us:before {
+  content: "\e900";
+}
+.icon-Acadamic-Profile:before {
+  content: "\e901";
+}
+.icon-achievement:before {
+  content: "\e902";
+}
+.icon-Arrow--right:before {
+  content: "\e903";
+}
+.icon-Arrow-slide--right:before {
+  content: "\e904";
+}
+.icon-Arrow-slide-left:before {
+  content: "\e905";
+}
+.icon-Blog:before {
+  content: "\e906";
+}
+.icon-bold:before {
+  content: "\e907";
+}
+.icon-clock:before {
+  content: "\e908";
+}
+.icon-COMMENT:before {
+  content: "\e909";
+}
+.icon-Compare-school:before {
+  content: "\e90a";
+}
+.icon-Create-blog:before {
+  content: "\e90b";
+}
+.icon-DROP-DWN:before {
+  content: "\e90c";
+}
+.icon-expert:before {
+  content: "\e90d";
+}
+.icon-Facebook:before {
+  content: "\e90e";
+}
+.icon-Facebook-pln:before {
+  content: "\e90f";
+}
+.icon-FEEDS:before {
+  content: "\e910";
+}
+.icon-Gallery:before {
+  content: "\e911";
+}
+.icon-google-plus:before {
+  content: "\e912";
+}
+.icon-google-plus-pln:before {
+  content: "\e913";
+}
+.icon-italic:before {
+  content: "\e914";
+}
+.icon-Job-openning:before {
+  content: "\e915";
+}
+.icon-LIKE:before {
+  content: "\e916";
+}
+.icon-liked-in:before {
+  content: "\e917";
+}
+.icon-LIKED:before {
+  content: "\e918";
+}
+.icon-Location:before {
+  content: "\e919";
+}
+.icon-menu:before {
+  content: "\e91a";
+}
+.icon-mobile:before {
+  content: "\e91b";
+}
+.icon-search:before {
+  content: "\e91c";
+}
+.icon-sHARE:before {
+  content: "\e91d";
+}
+.icon-smiley:before {
+  content: "\e91e";
+}
+.icon-Teaching-exp:before {
+  content: "\e91f";
+}
+.icon-TRENDS:before {
+  content: "\e920";
+}
+.icon-twitter:before {
+  content: "\e921";
+}
+.icon-twtr-pln:before {
+  content: "\e922";
+}
+.icon-Work-area:before {
+  content: "\e923";
+}

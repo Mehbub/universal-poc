@@ -1,0 +1,102 @@
+<div class="card-footer row" >
+	<a (click)="toggleLike();">
+		<div class="col-sm-4 col-xs-4 col-md-4 text-left feed_share">
+			<span *ngIf="!liked" class="icon-LIKE" aria-hidden="true"></span>
+			<span *ngIf="!liked">Like</span>
+			<span *ngIf="liked" style="color: red;" class="icon-LIKE" aria-hidden="true"></span>
+			<span *ngIf="liked">Liked</span>
+		</div>
+	</a>
+	<a *ngIf="content_type == 'App\\Models\\Post'" routerLink="{{content_link}}">
+	 	<div class="col-sm-4 col-xs-4 col-md-4 feed_share">
+	 		<span class="icon-COMMENT"></span> Comment <span *ngIf="comments_count">({{comments_count}})</span>
+	 	</div>
+	</a>
+	<a *ngIf="content_type != 'App\\Models\\Post'" [attr.href]="content_link">
+	 	<div class="col-sm-4 col-xs-4 col-md-4 feed_share">
+	 		<span class="icon-COMMENT"></span> Comment <span *ngIf="comments_count">({{comments_count}})</span>
+	 	</div>
+	</a>
+	<div class="col-sm-4 col-xs-4 col-md-4 text-right feed_share" >
+		<span class="dropdown">
+			<a  class="dropdown-toggle" type="button" id="share" data-toggle="dropdown" style="text-decoration: none;">
+			<span class="icon-sHARE"></span> Share</a>
+			<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="share"
+			style="box-shadow: none;border: none;text-align: right;padding: 5px 0px;text-decoration: none; ">
+			<!--    <li role="presentation">
+			    	<i class="icon-Facebook" (click)="socialShare('facebook', content_link, share_image, share_title, share_desc);" style="font-size: 25px;color:#3b5998;margin-right: 5px;margin-left: 5px"></i>
+			    	<i class="icon-google-plus-pln" (click)="socialShare('google', content_link);" style="font-size: 25px;color:#df4a32;margin-right: 5px;margin-left: 5px"></i>
+			    	<i class="icon-liked-in" (click)="socialShare('linkedin', content_link, share_title, share_desc);" style="font-size: 25px;color:#007bb6;margin-right: 5px;margin-left: 5px"></i>
+			    	<i class="icon-twitter" (click)="socialShare('twitter', content_link, share_title);" style="font-size: 25px;color:#00b6f1;margin-right: 5px;margin-left: 5px"></i>
+			    </li>-->
+		    </ul>
+		</span>
+	</div>
+	<p style="text-align: left; font-size: 12px;padding-left: 15px;">
+	 	<span *ngIf="likes_count">{{likes_count}} Likes,</span>
+	 	<span *ngIf="comments_count">{{comments_count}} Comments </span>
+	</p>
+</div>
+<div style="border-top: 1px solid #ccc">&nbsp;
+</div>
+<div style="margin-left: 15px;" class="text-left liked_status">
+   	<span *ngIf="likes_users.length > 0" >
+   		<span class="capitalize">{{ likes_users['0'].name }}</span>
+	   	<span class="capitalize" *ngIf="likes_users.length > 1" >, {{ likes_users['1'].name }} </span>
+	   	<span class="capitalize" *ngIf="likes_users.length > 2" > and {{ likes_users.length - 2 }} Others </span>
+   		liked this post.
+   	</span>
+</div>
+
+<div class="media" style="margin-top: 0px;padding-top: 2px;padding-bottom: 2px;" *ngFor="let comment of comments; let myIndex = index; " id="comment-{{myIndex}}">
+	<div class= "media-left" style="padding-right: 3px;">
+    	<img src="{{comment.image}}" alt="{{comment.content}}" onError="this.src='assets/images/default.png';" class="media-object img-circle"
+      	style="width:50px;height:50px;margin-right: 10px;" >
+    </div>
+    <div class="media-body" style="vertical-align:2px;">
+      	<h4 class="text-left" style="color: #2628b8;font-size: 16px;"></h4>
+      	<div style="float:right;cursor: pointer;" class="dropdown" *ngIf="(comment.creator_id == user.id) && (user.id)">
+      		<span id="report_abuse"
+      		class="icon-more-button-interface-symbol-of-three-horizontal-aligned-dots dropdown-toggle" data-toggle="dropdown" style="padding:0px 10px"></span>
+      		<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="report_abuse">
+      			<li role="presentation" (click)="deleteComment(comment.id, myIndex)">
+		      		<a role="menuitem" tabindex="-1" style="font-size: 10px;">
+		      		<i class="icon-delete" style="padding-right:15px;color:red;font-size: 12px;"></i>Delete</a>
+		      	</li>
+		      	<!--
+		      	<li role="presentation" (click)="reportAbuseOnComment(comment.id)">
+		      		<a role="menuitem" tabindex="-1" style="font-size: 10px;">
+		      		<i class="icon-flag" style="padding-right:15px;color:red;font-size: 12px;"></i>Report Abuse</a>
+		      	</li> -->
+		    </ul>
+       	</div>
+       	<br>
+       	<br>
+       	<p class="text-left comment_name capitalize">{{comment.name}}
+       	</p>
+      	<p class="text-left" style="font-size: 12px;color: #737373;line-height: 20px;padding-right: 15px;" [innerHTML]="comment.content">
+      	</p>
+    </div>
+</div>
+<a *ngIf="comments_count > 2" [attr.href]="content_link">
+	<p style="font-weight: 600;font-size: 12px;padding:0px 15px 15px;" class="text-left">
+		view more comments
+	</p>
+</a>
+<div style="padding:0px 10px 15px;" class="comment">
+	<form (ngSubmit)="liveFeedComment()" name="form" #f="ngForm" novalidate>
+       	<input type="text" style="width: 95%;font-size:14px;margin: auto;background-color: #f3eeee;border: none;outline: none;"
+		class="input-lg" name="comment" [(ngModel)]="newComment" placeholder="Type your comment" data-emoji-input="unicode" contenteditable="true">
+<!--
+		<i style="background-color: #f3eeee;border: none;outline: none;padding:10.5px 5px;border-top-right-radius: 6px;border-bottom-right-radius: 6px;"
+		  	class="icon-smiley"
+		    (click)="toggled = !toggled"
+		    [(emojiPickerIf)]="toggled"
+		    [emojiPickerPreserveSelection]="false"
+		    [emojiPickerDirection]="'bottom'"
+		    [emojiPickerAutofocus]="true"
+		    (emojiPickerSelect)="addEmonji($event)">
+		</i>
+-->
+    </form>
+</div>

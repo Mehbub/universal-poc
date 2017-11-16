@@ -1,0 +1,102 @@
+<h5 class="text-left live-feed-text"><span class="icon-FEEDS"></span>&nbsp;&nbsp;&nbsp;Live Feeds</h5>
+<div >
+	<div class="livefeed-card card" *ngFor="let feed of liveFeeds; let seedIndex = index; " style="margin-top:5px;margin-bottom: 15px;">
+		<div [hidden]="feed.content.type_label=='Event' && feed.content.public==0">
+			<div class="media">
+			    <div class="media-left">
+			    	<img class="media-object img-circle profile-img" src="{{feed.creator.image}}">
+			    </div>
+			    <div class="media-body">
+				    <div style="float:right" class="hidden-sm hidden-xs">
+				    	<span *ngIf=" feed.content.type_label == 'Event';" class="icon-small-calendar"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Legend';" class="icon-expert"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Album';" class="icon-Gallery"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Post';" class="icon-Blog"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Topper';" class="icon-achievement"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Achievement';" class="icon-trophy"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Media Coverage';" class="icon-media-coverage"></span>
+				    	<span *ngIf=" feed.content.type_label == 'Post';"><small class="side_icon" >Post
+				    	</small></span>
+				    	<small class="side_icon" *ngIf=" feed.content.type_label != 'Post';">{{feed.content.type_label}}</small>
+				    </div>
+				    <h1 class="media-left" style="font-size: 18px;">
+				    	<a *ngIf="feed.creator.type == 'App\\Models\\User'" routerLink="user/{{feed.creator.slug}}">{{feed.creator.name}}</a>
+				    	<a *ngIf="feed.creator.type == 'Blog\\User'" href="{{feed.creator.slug}}">{{feed.creator.name}}</a>
+				    	<a *ngIf="(feed.creator.type != 'App\\Models\\User') && (feed.creator.type != 'Blog\\User')" [attr.href]="getCreatorProfile(feed)">{{feed.creator.name}}</a>
+				    </h1>
+					<p class="text-left feed_time" style="font-size: 12px;"><span class="icon-clock"></span> {{feed.created_at }}
+				    </p>
+			    </div>
+			</div>
+			<div id="lightgallery-{{seedIndex}}">
+				<div *ngFor="let image of feed.content.images; let myIndex = index; " [attr.data-src]="image.url">
+					<a *ngIf="myIndex==0;">
+						<img id="1" *ngIf="myIndex==0;" src="{{image.url}}" alt="{{feed.content.title}}" class="livefeed-img" onError="this.src='assets/images/default.png';">
+					</a>
+					<a *ngIf=" myIndex > 0 && myIndex <3 ;">
+				      		<img id="2" *ngIf=" myIndex > 0 && myIndex <3 ;" src="{{image.url}}" alt="{{feed.content.title}}" class="livefeed-subimg" onError="this.src='assets/images/default.png';">
+				    </a>
+					<a href="" *ngIf=" feed.content.images.length == 4 && myIndex==3 ;">
+						<img id="3" *ngIf=" feed.content.images.length == 4 ;" src="{{image.url}}" alt="{{feed.content.title}}" class="livefeed-subimg" onError="this.src='assets/images/default.png';">
+			        </a>
+			        <a href="" *ngIf="myIndex > 3 && myIndex+1 == feed.content.images.length && feed.content.images.length > 4 ;">
+			        	<img id="4" *ngIf="myIndex > 3 && myIndex+1 == feed.content.images.length && feed.content.images.length > 4 ;" src="{{image.url}}" style="opacity: 0.3;" class="livefeed-subimg">
+			        	<h4 class="more"><b>{{feed.content.images.length - 3}} More...</b></h4>
+			        </a>
+			        <a [hidden]="myIndex >= 3">
+				      	<img id="2" *ngIf=" myIndex >= 3 ;" src="{{image.url}}" alt="{{feed.content.title}}" class="livefeed-subimg" onError="this.src='assets/images/default.png';">
+				    </a>
+				</div>
+				<a [href]="'https://www.youtube.com/watch?v=' + video.youtube_id" *ngFor="let video of feed.content.videos; let videoIndex = index; " [attr.data-src]="video.thumbnail">
+					<img style="padding:5px" id="1" name="{{videoIndex+feed.content.images.length}}" *ngIf="videoIndex+feed.content.images.length ==0;" src="{{video.thumbnail}}" [ngClass]="{'livefeed-video-img':feed.content.images.length === 0, 'livefeed-subimg': feed.content.images.length !== 0}">
+
+			      	<img *ngIf=" videoIndex+feed.content.images.length > 0 && videoIndex+feed.content.images.length < 3 ;" id="2" name="{{videoIndex+feed.content.images.length}}" src="{{video.thumbnail}}" class="livefeed-subimg">
+					<img *ngIf=" feed.content.videos.length+feed.content.images.length == 4 && videoIndex+feed.content.images.length == 3 ;" id="3" name="{{videoIndex+feed.content.images.length}}" src="{{video.thumbnail}}" class="livefeed-subimg">
+			        <img *ngIf="videoIndex+feed.content.images.length > 3 && videoIndex+feed.content.images.length+1 == feed.content.videos.length+feed.content.images.length  && feed.content.videos.length+feed.content.images.length - 4 > 0 ;" id="4" name="{{videoIndex+2}}" src="assets/images/sub_layer.png" class="livefeed-subimg">
+			    </a>
+			</div>
+			<div style="clear: both;"></div>
+		    <div class="card-block text-left">
+		        <h2 class="card-title feed_title" style="font-size: 16px;font-weight:500">
+		        	<a *ngIf="feed.content.type == 'App\\Models\\Post'" routerLink="user/{{feed.creator.slug}}/post/{{feed.content.slug}}"><p [innerHTML]="feed.content.title"></p></a>
+		        	<a *ngIf="feed.content.type != 'App\\Models\\Post'" [attr.href]="secondaryBaseUrl +postDetailsLink(feed)"><p [innerHTML]="feed.content.title"></p></a>
+		        </h2>
+		        <div class="card-text feed_desc" style="font-size: 13px;word-wrap:break-word">
+		        	<p [innerHTML]="feed.content.description | limitTo: (feed.readMore) ? feed.readMore : description_min_limit"></p>
+		        </div>
+				<p *ngIf="feed.content.description.length > description_min_limit" style="font-size: 13px;color: #003af8;">
+					<a (click)="seeMore(feed)" *ngIf="!feed.readMore">Read More..</a>
+					<a *ngIf="feed.readMore" [attr.href]="secondaryBaseUrl +postDetailsLink(feed)">Read More..</a>
+				</p>
+			</div>
+			<div class="card-footer row" *ngIf="feed.content.type_label == 'Blog'">
+			</div>
+		 	<social-footer *ngIf="feed.content.type_label != 'Blog'"
+		 	[share_desc]="feed.content.description" [share_pic_url]="feed.content.image" [share_title]="feed.content.title" [creator_slug]="feed.creator.slug" [content_slug]="feed.content.slug" [shares_count]="feed.shares_count" [liked_or_not]="feed.liked" [likes_users]="feed.likes_users" [content_id]="feed.content.id" [content_type]="feed.content.type"
+                           [comments]="feed.comments"
+                           [comments_count]="feed.comments_count"
+                           [creator_type]="feed.creator.type"
+                           [creator_id]="feed.creator.id"
+                           [content_link]="postDetailsLink(feed)"
+                           [comments_limit]="2"
+                           [liked]="feed.liked" [likes_count]="feed.likes_count"
+                           [tags]="feed.tags"
+                           [share_image] = "(feed.content.images[0])? feed.content.images[0].url : feed.creator.image">
+            </social-footer>
+
+            <social-blog-footer *ngIf="feed.content.type_label == 'Blog'"
+		 	[share_desc]="feed.content.description" [share_pic_url]="feed.content.image" [share_title]="feed.content.title" [creator_slug]="feed.creator.slug" [content_slug]="feed.content.slug" [shares_count]="feed.shares_count" [liked_or_not]="feed.liked" [likes_users]="feed.likes_users" [content_id]="feed.content.id" [content_type]="feed.content.type"
+                           [comments]="feed.comments"
+                           [comments_count]="feed.comments_count"
+                           [creator_type]="feed.creator.type"
+                           [creator_id]="feed.creator.id"
+                           [content_link]="feed.content.url"
+                           [comments_limit]="2"
+                           [liked]="feed.liked" [likes_count]="feed.likes_count"
+                           [tags]="feed.tags"
+                           [share_image] = "(feed.content.images[0])? feed.content.images[0].url : feed.creator.image">
+            </social-blog-footer>
+
+		</div>
+	</div>
+
